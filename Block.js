@@ -1,10 +1,10 @@
 const SHA256 = require('crypto-js/sha256');
-
+const SC = require('node-soundcloud');
 class Block {
-  constructor(index, timestamp, data, previousHash = '') {
+  constructor(index, timestamp, soundCloudData, previousHash = '') {
     this.index = index;
     this.timestamp = timestamp;
-    this.data = data;
+    this.soundCloudData = soundCloudData;
     this.previousHash = previousHash;
     this.hash = this.calculateHash();
     this.nonce = 0;
@@ -12,7 +12,7 @@ class Block {
 
   calculateHash() {
     return SHA256(this.index + this.previousHash
-       + this.timestamp + JSON.stringify(this.data) + this.nonce).toString();
+       + this.timestamp + JSON.stringify(this.soundCloudData) + this.nonce).toString();
   }
   /* This function will place zeros corresponding to the difficulty parameter
    in front of our hash. The higher the difficulty, the longer it takes for
